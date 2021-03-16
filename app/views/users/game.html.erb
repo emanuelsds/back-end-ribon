@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="monster">
+        <%= @monster.name %>
+    </div>
+    <div class="options">
+        <%= button_to "Atacar", data: {user: @user.id, monster: @monster.id }, action: "attack"  %>
+        <%= button_to "Collect", action: "collect"  %>
+        <%= @user.name%>
+        
+    </div>
+</div>

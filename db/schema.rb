@@ -16,33 +16,38 @@ ActiveRecord::Schema.define(version: 2021_03_13_164156) do
   enable_extension "plpgsql"
 
   create_table "collected_coins", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.integer "value"
     t.index ["user_id"], name: "index_collected_coins_on_user_id"
   end
 
   create_table "deaths", force: :cascade do |t|
-    t.bigint "users_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["users_id"], name: "index_deaths_on_users_id"
+    t.index ["user_id"], name: "index_deaths_on_user_id"
   end
 
   create_table "killed_monsters", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "monsters_id"
+    t.bigint "user_id", null: false
+    t.bigint "monster_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["monsters_id"], name: "index_killed_monsters_on_monsters_id"
-    t.index ["users_id"], name: "index_killed_monsters_on_users_id"
+    t.index ["monster_id"], name: "index_killed_monsters_on_monster_id"
+    t.index ["user_id"], name: "index_killed_monsters_on_user_id"
   end
 
   create_table "monsters", force: :cascade do |t|
     t.string "name"
+    t.integer "coins"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
   end
 
+  add_foreign_key "collected_coins", "users"
+  add_foreign_key "deaths", "users"
+  add_foreign_key "killed_monsters", "monsters"
+  add_foreign_key "killed_monsters", "users"
 end

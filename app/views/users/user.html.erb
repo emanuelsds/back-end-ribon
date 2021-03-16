@@ -4,7 +4,7 @@
           <%= form.text_field :user %>
           <%= form.submit "+" %>
         <% end %>
-        <%= form_with url: "/game?hp=6", method: :get do |form| %>
+        <%= form_with url: "/game", method: :get do |form| %>
           <%= form.collection_select :user, @users, :id, :name %>
           <%= form.submit "Entrar" %>
         <% end %>

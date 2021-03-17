@@ -14,9 +14,9 @@ class KilledMonster < ApplicationRecord
       user.trophys << Trophy.new(user_id: user.id, level: 2, trophy: "#{monster.name}s killed")
     when  1000
       user.trophys << Trophy.new(user_id: user.id, level: 3, trophy: "#{monster.name}s killed")
-    when  10000
+    when  10_000
       user.trophys << Trophy.new(user_id: user.id, level: 4, trophy: "#{monster.name}s killed")
-    when  100000
+    when  100_000
       user.trophys << Trophy.new(user_id: user.id, level: 5, trophy: "#{monster.name}s killed")
     end
   end

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def game
-    @monster = Monster.find(rand(5) + 1)
+    @monster = Monster.find(rand(1..5))
     @user = User.find(params[:user])
   end
 

@@ -8,5 +8,4 @@ namespace :initialize do
     Monster.create(name: "Meowser", coins: 100)
     puts 'Done!'
   end
-
 end

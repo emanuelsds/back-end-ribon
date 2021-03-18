@@ -7,17 +7,29 @@ class KilledMonster < ApplicationRecord
   private
 
   def check_trophy
-    case user.killed_monsters.where(monster_id: monster.id).size
-    when  1
-      user.trophys << Trophy.new(user_id: user.id, level: 1, trophy: "#{monster.name}s killed")
-    when  100
-      user.trophys << Trophy.new(user_id: user.id, level: 2, trophy: "#{monster.name}s killed")
-    when  1000
-      user.trophys << Trophy.new(user_id: user.id, level: 3, trophy: "#{monster.name}s killed")
-    when  10_000
-      user.trophys << Trophy.new(user_id: user.id, level: 4, trophy: "#{monster.name}s killed")
-    when  100_000
-      user.trophys << Trophy.new(user_id: user.id, level: 5, trophy: "#{monster.name}s killed")
-    end
+    user_trophys = user.trophys
+    trophy_lvl = case user.killed_monsters.where(monster_id: monster.id).size
+                 when  1
+                   0
+                 when  100
+                   1
+                 when  1000
+                   2
+                 when  10_000
+                   3
+                 when  100_000
+                   4
+                 else
+                   -1
+                 end
+    set_trophy(trophy_lvl)
+  end
+
+  def set_trophy(trophy_lvl)
+    return if trophy_lvl == -1
+
+    trophy_value = trophy_lvl > 0 ? trophy_lvl + 1 : trophy_lvl
+    user.trophys << Trophy.new(user_id: user.id, level: trophy_lvl + 1,
+                               trophy: "1#{'0' * trophy_value} #{monster.name} killed")
   end
 end

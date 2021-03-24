@@ -3,39 +3,35 @@ class CollectedCoin < ApplicationRecord
 
   validates :value, presence: true
 
-  before_create :check_coins
+  before_create :check_trophy
+
+  after_create :update_user_coins
 
   private
-
-  def check_coins
-    coins = user.collected_coins.pluck(:value).inject(:+)
-    coins = coins.nil? ? 0 : coins
+  def check_trophy
+    coins = user.coins
     coin_value = value
-    check_trophy(coin_value, coins)
-  end
-
-  def check_trophy(coin_value, coins)
     trophy_lvl = if coins < 1 && coins + coin_value >= 1
-                   0
+                   [1, 1]
                  elsif coins < 100 && coins + coin_value >= 100
-                   1
+                   [2, 100]
                  elsif coins < 1000 && coins + coin_value >= 1000
-                   2
+                   [3, 1000]
                  elsif coins < 10_000 && coins + coin_value >= 10_000
-                   3
+                   [4, 10_000]
                  elsif coins < 100_000 && coins + coin_value >= 100_000
-                   4
+                   [5, 100_000]
                  else
-                   -1
+                   0
                  end
-    set_trophy(trophy_lvl)
+    return if trophy_lvl == 0
+    user.trophys << Trophy.new(user_id: user.id, level: trophy_lvl[0],
+                               trophy: "#{trophy_lvl[1]} Coins collected")
+    [trophy_lvl[0], user.trophys.last.trophy]
   end
 
-  def set_trophy(trophy_lvl)
-    return if trophy_lvl == -1
-
-    trophy_value = trophy_lvl > 0 ? trophy_lvl + 1 : trophy_lvl
-    user.trophys << Trophy.new(user_id: user.id, level: trophy_lvl + 1,
-                               trophy: "1#{'0' * trophy_value} Coins collected")
+  def update_user_coins
+    user.update(coins: user.coins + value)
+    user.coins + value
   end
 end

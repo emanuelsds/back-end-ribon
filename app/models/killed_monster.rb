@@ -1,35 +1,28 @@
 class KilledMonster < ApplicationRecord
   belongs_to :user
   belongs_to :monster
-
-  after_create :check_trophy
-
+  after_create :create_trophy
   private
 
-  def check_trophy
-    user_trophys = user.trophys
+  def create_trophy
     trophy_lvl = case user.killed_monsters.where(monster_id: monster.id).size
                  when  1
-                   0
+                   [1, 1]
                  when  100
-                   1
+                   [2, 100]
                  when  1000
-                   2
+                   [3, 1000]
                  when  10_000
-                   3
+                   [4, 10_000]
                  when  100_000
-                   4
+                   [5, 100_000]
                  else
-                   -1
+                   0
                  end
-    set_trophy(trophy_lvl)
-  end
+    return if trophy_lvl == 0
 
-  def set_trophy(trophy_lvl)
-    return if trophy_lvl == -1
-
-    trophy_value = trophy_lvl > 0 ? trophy_lvl + 1 : trophy_lvl
-    user.trophys << Trophy.new(user_id: user.id, level: trophy_lvl + 1,
-                               trophy: "1#{'0' * trophy_value} #{monster.name} killed")
+    user.trophys << Trophy.new(user_id: user.id, level: trophy_lvl[0],
+                               trophy: "#{trophy_lvl[1]} #{monster.name} killed")
+    [trophy_lvl[0], user.trophys.last.trophy]
   end
 end

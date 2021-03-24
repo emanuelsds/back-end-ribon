@@ -1,11 +1,9 @@
 <div class="container">
-    <div class="monster">
+    <div class="monster" id="new-monster">
         <%= @monster.name %>
     </div>
     <div class="options">
-        <%= button_to "Atacar", data: {user: @user.id, monster: @monster.id }, action: "attack"  %>
-        <%= button_to "Collect", action: "collect"  %>
+        <%= button_to "Atacar", data: { user: @user.id, monster: @monster.id }, action: "attack" , remote: true %>
         <%= @user.name%>
-        
     </div>
 </div>

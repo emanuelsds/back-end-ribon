@@ -4,8 +4,8 @@
           <%= form.text_field :user %>
           <%= form.submit "+" %>
         <% end %>
-        <%= form_with url: "/game", method: :get do |form| %>
-          <%= form.collection_select :user, @users, :id, :name %>
+        <%= form_with url: "/game", method: :post do |form| %>
+          <%= form.collection_select :id, @users, :id, :name %>
           <%= form.submit "Entrar" %>
         <% end %>
     </div>

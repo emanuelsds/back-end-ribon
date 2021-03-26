@@ -9,7 +9,6 @@ class UsersController < ApplicationController
   end
 
   def game
-
     @monster = Monster.find(rand(1..5))
     @user = User.find(params[:id])
   end
@@ -17,6 +16,8 @@ class UsersController < ApplicationController
   def attack
     @user = User.find(params[:data][:user])
     @actual_monster = Monster.find(params[:data][:monster])
+    @trophys = @user.trophys
+    @killed_monsters = @user.killed_monsters
     @monster = Monster.find(rand(1..5))
     @user.killed_monsters << KilledMonster.new(user_id: @user.id, monster_id: @actual_monster.id)
     @user.deaths << Death.new(user_id: @user.id)

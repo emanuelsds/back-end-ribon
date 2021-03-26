@@ -1,12 +1,18 @@
 <div>
-    <div>
-        <%= form_with url: "/add_user", method: :post do |form| %>
-          <%= form.text_field :user %>
-          <%= form.submit "+" %>
-        <% end %>
-        <%= form_with url: "/game", method: :post do |form| %>
-          <%= form.collection_select :id, @users, :id, :name %>
-          <%= form.submit "Entrar" %>
-        <% end %>
+    <div class="login">
+        <div class="input">
+            <p> Criar usuário </p>
+            <%= form_with url: "/add_user", method: :post do |form| %>
+              <%= form.text_field :user %>
+              <%= form.submit "+" %>
+            <% end %>
+        </div>
+        <div class="select">
+            <p> Selecionar usuário </p>
+            <%= form_with url: "/game", method: :post do |form| %>
+              <%= form.collection_select :id, @users, :id, :name %>
+              <%= form.submit "Entrar" %>
+            <% end %>
+        </div>
     </div>
 </div>

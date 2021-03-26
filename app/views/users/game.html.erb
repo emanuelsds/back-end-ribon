@@ -1,9 +1,58 @@
-<div class="container">
-    <div class="monster" id="new-monster">
-        <%= @monster.name %>
+<div class="main-container">
+    <div class="container">
+        <div class="monster" id="new-monster">
+            <%= @monster.name %>
+        </div>
+        <div class="options">
+            <%= button_to "Atacar", data: { user: @user.id, monster: @monster.id }, action: "attack" , remote: true %>
+        </div>
     </div>
-    <div class="options">
-        <%= button_to "Atacar", data: { user: @user.id, monster: @monster.id }, action: "attack" , remote: true %>
-        <%= @user.name%>
+    <div class="user-status">
+        <p> Usuário: </p>
+        <p> <%= @user.name%> </p>
+        <div class="status">
+            <div class="coins">
+                <p> <%= @user.coins%> Moedas </p>
+                <p> Nível do troféu: <%= @trophys.where('trophy LIKE ?', '%Coins%').size %> </p>
+            </div>
+            <div class="deaths">
+                <p> <%= @killed_monsters.all.size %> Mortes </p>
+                <p> Nível do troféu: <%= @trophys.where('trophy LIKE ?', '%Deaths%').size %> </p>
+            </div>
+        </div>
+    </div>
+    <div class="container-2">
+        <div class="user-killed-monsters">
+            <div class="goomba">
+                <p> Goomba matados </p>
+                <%= @killed_monsters.where(monster_id: 1).size %>
+                <p> Nível do troféu </p>
+                <p><%= @trophys.where('trophy LIKE ?', '%Goomba%').size %></p>
+            </div>
+            <div class="buzzy">
+                <p> Buzzy beetles matados </p>
+                <%= @killed_monsters.where(monster_id: 2).size %>
+                <p> Nível do troféu </p>
+                <p><%= @trophys.where('trophy LIKE ?', '%Buzzy%').size %></p>
+            </div>
+            <div class="koopa">
+                <p> Koopa troopa matados </p>
+                <%= @killed_monsters.where(monster_id: 3).size %>
+                <p> Nível do troféu </p>
+                <p><%= @trophys.where('trophy LIKE ?', '%Koopa%').size %></p>
+            </div>
+            <div class="bowser">
+                <p> Bowsers matados </p>
+                <%= @killed_monsters.where(monster_id: 4).size %>
+                <p> Nível do troféu </p>
+                <p><%= @trophys.where('trophy LIKE ?', '%Bowser%').size %></p>
+            </div>
+            <div class="meowser">
+                <p> Meowser matados </p>
+                <%= @killed_monsters.where(monster_id: 5).size %>
+                <p> Nível do troféu </p>
+                <p><%= @trophys.where('trophy LIKE ?', '%Meowser%').size %></p>
+            </div>
+        </div>
     </div>
 </div>

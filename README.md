@@ -5,6 +5,7 @@
 
 ## 2- Execute os seguinte comandos no terminal
 ``` cd back-end-ribon ```
+
 ``` rails db:create db:migrate && rake initialize:monsters ```
 
 ## 3- Inicie o servidor rails

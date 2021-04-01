@@ -1,24 +1,14 @@
-# README
+# COMO RODAR
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 1- Clone o repositório
+``` git clone https://github.com/emanuelsds/back-end-ribon.git ```
 
-Things you may want to cover:
+## 2- Execute os seguinte comandos no terminal
+``` cd back-end-ribon ```
+``` rails db:create db:migrate && rake initialize:monsters ```
 
-* Ruby version
+## 3- Inicie o servidor rails
+``` rails s ```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 4- Vá para o navegador e entre na URL
+``` localhost:3000 ```
